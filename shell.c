@@ -36,7 +36,7 @@ int main()
     else{
       execvp(commands[0], commands);
       //execvp(command[0],command);
-      return getpid();
+      // return getpid();
     }
     //}
  
