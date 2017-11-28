@@ -7,37 +7,38 @@
 
 int main()
 {
-  char dest[256];
-
-  printf("Enter command: ");
-  fgets(dest, sizeof(dest), stdin);
-  //printf("%s",dest);
-  char commands[256];
-  strcpy(commands,dest);
-  char ** test = parse_args(commands);
   
-  int child = fork();
-   if (!child){
+    char *  dest= (char *) calloc(20, sizeof(char*));
+    printf("Enter commands: ");
+    fgets(dest, 30, stdin);
     
-     execvp(test[0], test);
-   }
-   else{
-     //printf("Enter command: ");
-     fgets(dest, sizeof(dest), stdin);
-     //printf("%s",dest);
-     char commands[256];
-     strcpy(commands,dest);
-     char ** test = parse_args(commands);
-     child = fork();
-     
-     if(!child){
-       execvp(test[0], test);
-     }
+    dest[strlen(dest) -1] = 0; //gets rid of the new line at the end of the parsed array
+    char ** commands = (char**) calloc(20, sizeof(char*));
+    commands = parse_args(dest);
+    // commands = parse_argC(dest); //separated by semicolons;
 
-     int status;
-     int finished = wait(&status);
-     int ret = WEXITSTATUS(status);
-   }
-   
+    //int num_of_commands = 0;
+    //num_of_commands = sizeof(commands)/sizeof(char*);
+    
+    //while(num_of_commands){
+    //char ** command = (char**) calloc(20,sizeof(char*));
+    //command = parse_args(command[num_of_commands]); //separated by spaces
+    
+    //make this into a loop
+    //while(command){
+    int parent = getpid();
+    int child = fork();
+    
+    if (getpid() == parent){
+      int status;
+      int finish = wait(&status);
+    }
+    else{
+      execvp(commands[0], commands);
+      //execvp(command[0],command);
+      return getpid();
+    }
+    //}
+ 
   return 0;
 }
