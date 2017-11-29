@@ -10,20 +10,23 @@ int main()
 
   int f = 1;
   char ** commands = (char**) calloc(20, sizeof(char*));
+  char *  dest = (char)calloc(100, sizeof(char));
+  char ** line = (char *)calloc(20, sizeof(char*));
+  int i;
 
   while (f) {
-    char *  dest = (char *) calloc(20, sizeof(char*));
     printf("Enter commands: ");
     fgets(dest, 30, stdin);
     
     dest[strlen(dest) -1] = 0; //gets rid of the new line at the end of the parsed array
 
     commands = parse_args(dest);
-
+    printf("%d\n", commands[1]);
+    
     line = parse_argC(dest); //separated by semicolons;
 
-    int num_of_commands = 0;
-    num_of_commands = sizeof(commands)/sizeof(char*);
+    // int num_of_commands = sizeof(commands)/sizeof(char*);
+    // for (i = 0; line[i]
     
    
     //command = parse_args(command[num_of_commands]); //separated by spaces
