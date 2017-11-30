@@ -32,7 +32,7 @@ int main()
       
       commands = parse_args(*line);
       
-      
+      /*
       if (strncmp(commands[1], ">", 1) == 0){//redirects stdout by overwriting file
 	fd = creat(commands[2], 0644);
 	dup2(fd, fileno(stdout));
@@ -53,6 +53,7 @@ int main()
 	pclose(file);
 	
       }
+      */
       
     
       if (strncmp(commands[0], "exit", 4) == 0) {
