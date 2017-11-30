@@ -21,7 +21,7 @@ char ** parse_argC(char * s1){
 	int i = 0;
 
 	while (s1 && i < 9){
-	  char * string = strsep (&s1," ; ");
+	  char * string = strsep (&s1,";");
 	  ret[i] = string;
 	  i++;
 	}
