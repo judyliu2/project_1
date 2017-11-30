@@ -20,6 +20,9 @@ shell_debug.o: shell.c shell.h
 debug: shell_debug
 	valgrind --leak-check=yes ./shell_debug
 
+debug-gdb: shell_debug
+	@gdb ./shell_debug
+
 clean:
 	@rm *.o
 	@rm *~
