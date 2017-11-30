@@ -4,14 +4,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 int main()
 {
-  int READ = 0;
-  int WRITE = 1;
-  int fds[2];
-  int fds2[2];
-  FILE *file;
+  FILE* file;
+  int fd;
   int f; // for forking
   char *  dest = (char*)calloc(100, sizeof(char)); // for fgets()
   char ** line = (char **)calloc(20, sizeof(char*)); // for parse_argC()
@@ -30,20 +28,32 @@ int main()
     line = parse_argC(dest); //separated by semicolons;
     
     while (f && *line) { // parent loops through commands that were separated by semicolons
-      // printf("%d\n", line);
-      // commands = parse_args(dest);
-      // printf("[%s]\n", line[0]);
+
       
       commands = parse_args(*line);
       
-      // printf("%d\n", parse_args(*line));
-      // printf("[%s]\n", commands[0]);
-    
-    // int num_of_commands = sizeof(commands)/sizeof(char*);
-    // for (i = 0; line[i]
-    
-   
-    //command = parse_args(command[num_of_commands]); //separated by spaces
+      
+      if (strncmp(commands[1], ">", 1) == 0){//redirects stdout by overwriting file
+	fd = creat(commands[2], 0644);
+	dup2(fd, fileno(stdout));
+	close(fd);
+      }
+      
+      if (strncmp(commands[1], "<", 1) == 0){//redirects stdin from file
+	fd = open(commands[2], O_RDONLY, 0);
+	dup2(fd, fileno(stdin));
+	close(fd);
+      }
+      
+      
+      if (strncmp(commands[1], "|", 1) == 0){
+	file = popen(commands[0], "r");
+	char * info = calloc(100, sizeof(char));
+	fgets(info, sizeof(info), file);
+	pclose(file);
+	
+      }
+      
     
       if (strncmp(commands[0], "exit", 4) == 0) {
 	free(dest);
@@ -79,19 +89,7 @@ int main()
   free(dest);
   free(line);
   */
-  if (strncmp(commands[1], ">", 1) == 0){//redirects stdout by overwriting file
-    //read(fds[READ]);
-  }
-  
-  if (strncmp(commands[1], "<", 1) == 0){//redirects stdin from file
-  }
-  if (strncmp(commands[1], "|", 1) == 0){
-    file = popen(commands[0], "r");
-    char * info = calloc(100, sizeof(char));
-    fgets(info, sizeof(info), file);
-    pclose(file);
-    
-  }
+ 
   
   execvp(commands[0], commands);
   
