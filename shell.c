@@ -7,6 +7,11 @@
 
 int main()
 {
+  int READ = 0;
+  int WRITE = 1;
+  int fds[2];
+  int fds2[2];
+  FILE *file;
   int f; // for forking
   char *  dest = (char*)calloc(100, sizeof(char)); // for fgets()
   char ** line = (char **)calloc(20, sizeof(char*)); // for parse_argC()
@@ -15,6 +20,7 @@ int main()
   f = 1; // to get into while loop
 
   while (f) {
+   
     printf("Enter commands: ");
     fgets(dest, 30, stdin);
     dest[strlen(dest) -1] = 0; //gets rid of the new line at the end of the parsed array
@@ -45,9 +51,10 @@ int main()
 	free(commands);
 	exit(EXIT_SUCCESS);
       }
+     
       //else 
       if (strncmp(commands[0], "cd", 2) == 0) {
-	printf("[%s]\n", commands[1]);
+	//printf("[%s]\n", commands[1]);
 	chdir(commands[1]);
       }
       else {
@@ -72,6 +79,19 @@ int main()
   free(dest);
   free(line);
   */
+  if (strncmp(commands[1], ">", 1) == 0){//redirects stdout by overwriting file
+    //read(fds[READ]);
+  }
+  
+  if (strncmp(commands[1], "<", 1) == 0){//redirects stdin from file
+  }
+  if (strncmp(commands[1], "|", 1) == 0){
+    file = popen(commands[0], "r");
+    char * info = calloc(100, sizeof(char));
+    fgets(info, sizeof(info), file);
+    pclose(file);
+    
+  }
   
   execvp(commands[0], commands);
   
