@@ -14,7 +14,7 @@
    - When parsing through multiple commands, so spaces can be used between semicolons
 4. Files & Function Headers
 
-'''
+```
 functions.c 
    - Contains functions
    /*===== char * * parse args()=======
@@ -29,4 +29,4 @@ shell.h
    - contains header files
 shell.c
    - Runs the shell and handles forking
-'''
+```
