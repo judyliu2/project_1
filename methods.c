@@ -28,3 +28,25 @@ char ** parse_argC(char * s1){
 	ret[i] = NULL;
 	return ret;
 }
+
+// Precondition: s must be null-terminating.
+char * trim(char * s)
+{
+  char * str;
+  
+  while (*s == ' ') { // remove spaces from front of string
+    s++;
+  }
+  str = s;
+  while (str) { // move str to null byte at the end
+    str++;
+  }
+  str--;
+  while (str > s && *str == ' ') {
+    // keep taking spaces off the end until you arrive at a different character
+    *str = 0;
+    str--;
+  }
+  
+  return s;
+}
