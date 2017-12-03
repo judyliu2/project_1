@@ -10,6 +10,8 @@ int main()
 {
   FILE* file;
   int fd;
+  int fdpipe[2];
+  int pid;
   int f; // for forking
   char buf[4096]; // will contain name of working directory // = (char *)malloc(100 * sizeof(char));
   char * dest = (char*)calloc(100, sizeof(char)); // for fgets()
@@ -31,34 +33,11 @@ int main()
     placeholder = line = parse_argC(dest); //separated by semicolons;
     
     while (f && *line) { // parent loops through commands that were separated by semicolons
-
+      
       
       commands = parse_args(*line);
       
-      /*
-      if (strncmp(commands[1], ">", 1) == 0){//redirects stdout by overwriting file
-	fd = creat(commands[2], 0644);
-	dup2(fd, fileno(stdout));
-	close(fd);
-      }
       
-      if (strncmp(commands[1], "<", 1) == 0){//redirects stdin from file
-	fd = open(commands[2], O_RDONLY, 0);
-	dup2(fd, fileno(stdin));
-	close(fd);
-      }
-      
-      
-      if (strncmp(commands[1], "|", 1) == 0){
-	file = popen(commands[0], "r");
-	char * info = calloc(100, sizeof(char));
-	fgets(info, sizeof(info), file);
-	pclose(file);
-	
-      }
-      */
-      
-    
       if (strncmp(commands[0], "exit", 4) == 0) {
 	// free(buf);
 	free(dest);
@@ -85,6 +64,14 @@ int main()
 
 	  free(commands);
 	  wait(&status);
+	  /*
+	  if (strncmp(commands[1], "|",1) == 0){
+	    char * arg[] = {commands[2], NULL};
+	    dup2(fdpipe[1], 1);
+	    close(fdpipe[0]);
+	    execvp(arg[0], arg);
+	  }
+	  */
 	}
       }
       
@@ -106,8 +93,39 @@ int main()
 
 
   // free(*line);
+  if (commands[1] == ">" || commands[1] == "<" || commands[1] == "|") {
+	
+	if (strncmp(commands[1], ">", 1) == 0){//redirects stdout by overwriting file
+	  char * arg[] = { commands[0], NULL};
+	  fd = open(commands[2], O_WRONLY | O_CREAT, 0644); // creates a new file
+	  dup2(fd, 1); //stdout(1) is put into the new file
+	  
+	  close(fd);
+	  execvp(arg[0] , arg);
+	}
+	
+	if (strncmp(commands[1], "<", 1) == 0){//redirects stdin from file
+	  char * arg[] = { commands[0], NULL};
+	  fd = open(commands[0], O_RDONLY, 0644);
+	  dup2(fd, 0); //stdin (0)
+	  close(fd);
+	  execvp(arg[0] , arg);
+	}
+	
+	
+	if (strncmp(commands[1], "|", 1) == 0){ //make a copy of stdout of file and  use it for stdin of the other
+	  char * arg[] = { commands[0], NULL};
+	  dup2(fdpipe[0], 0);
+	  close(fdpipe[1]);
+	  execvp (arg[0], arg);
+	  
+	
+	}
+   }
+   
+  else{
   execvp(commands[0], commands);
-  
+  }
       //execvp(command[0],command);
       // return getpid();
       // }
