@@ -34,7 +34,7 @@ int main()
     
     while (f && *line) { // parent loops through commands that were separated by semicolons
       
-      
+      *line = trim(*line);
       commands = parse_args(*line);
       
       
@@ -121,11 +121,11 @@ int main()
 	  
 	
 	}
-   }
+  }
    
   else{
   execvp(commands[0], commands);
-  }
+  //}
       //execvp(command[0],command);
       // return getpid();
       // }
