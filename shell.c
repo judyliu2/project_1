@@ -11,15 +11,17 @@ int main()
   FILE* file;
   int fd;
   int f; // for forking
+  char buf[4096]; // will contain name of working directory // = (char *)malloc(100 * sizeof(char));
   char *  dest = (char*)calloc(100, sizeof(char)); // for fgets()
-  char ** line = (char **)calloc(20, sizeof(char*)); // for parse_argC()
-  char ** commands = (char**) calloc(20, sizeof(char*)); // for parse_args()
+  char ** line; // = (char **)calloc(20, sizeof(char*)); // for parse_argC()
+  char ** commands; // = (char**) calloc(20, sizeof(char*)); // for parse_args()
 
   f = 1; // to get into while loop
+  // buf = 0;
 
   while (f) {
-   
-    printf("Enter commands: ");
+    getcwd(buf, sizeof(buf));
+    printf("%s $ ", buf);
     fgets(dest, 30, stdin);
     dest[strlen(dest) -1] = 0; //gets rid of the new line at the end of the parsed array
 
@@ -57,16 +59,20 @@ int main()
       
     
       if (strncmp(commands[0], "exit", 4) == 0) {
+	// free(buf);
 	free(dest);
 	free(line);
 	free(commands);
-	exit(EXIT_SUCCESS);
+	return 0;
       }
      
       //else 
       if (strncmp(commands[0], "cd", 2) == 0) {
 	//printf("[%s]\n", commands[1]);
 	chdir(commands[1]);
+	// free(dest);
+	// free(line);
+	// free(commands);
       }
       else {
     
@@ -87,11 +93,12 @@ int main()
   
   // else{
   /*
-  free(dest);
-  free(line);
+    free(dest);
+    free(line);
   */
- 
-  
+
+
+  // free(*line);
   execvp(commands[0], commands);
   
       //execvp(command[0],command);
