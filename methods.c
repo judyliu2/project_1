@@ -38,7 +38,7 @@ char * trim(char * s)
     s++;
   }
   str = s;
-  while (str) { // move str to null byte at the end
+  while (*str) { // move str to null byte at the end
     str++;
   }
   str--;
@@ -47,6 +47,5 @@ char * trim(char * s)
     *str = 0;
     str--;
   }
-  
   return s;
 }
