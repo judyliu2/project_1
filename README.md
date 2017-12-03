@@ -4,15 +4,17 @@
 1. - Features
    - Forks and executes commands
    - Parses through multiple commands 
-   - Redirects using >, < (not yet)
-   - Implements simple pipes (not yet)
+   - Redirects using >
+  
 2. Unsucessful attempts
-
+   - Redirecting using <
+   - Simple pipes
+   
 3. Bugs
    - When parsing through multiple commands, so spaces can be used between semicolons
 4. Files & Function Headers
 
-
+'''
 functions.c 
    - Contains functions
    /*===== char * * parse args()=======
@@ -26,4 +28,5 @@ functions.c
 shell.h
    - contains header files
 shell.c
-   - Runs the shell
+   - Runs the shell and handles forking
+'''
