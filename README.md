@@ -4,12 +4,11 @@
 1. - Features
    - Forks and executes commands
    - Parses through multiple commands 
-   - Redirects using >
+   - Redirects using >, <
+   - Uses simple pipes
   
 2. Unsucessful attempts
-   - Redirecting using <
-   - Simple pipes
-   
+   - None   
 3. Bugs
    - When parsing through multiple commands, so spaces can be used between semicolons
 4. Files & Function Headers
@@ -25,6 +24,10 @@ functions.c
    - Inputs: char * line
    - Returns Array of strings separated by semicolons
    */
+   /*===== char * trim) ===========
+   - Inputs: char * line
+   - Returns a char *
+   
 shell.h
    - contains header files
 shell.c
