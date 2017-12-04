@@ -8,9 +8,11 @@
    - Uses simple pipes
   
 2. Unsucessful attempts
-   - None   
+   - Redirecting using < (fixed)
+   - Simple pipes (fixed)
+   
 3. Bugs
-   - When parsing through multiple commands, so spaces can be used between semicolons
+   - When parsing through multiple commands, so spaces can be used between semicolons (fixed)
 4. Files & Function Headers
 
 ```
