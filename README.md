@@ -8,8 +8,8 @@
    - Uses simple pipes
   
 2. Unsucessful attempts
-   - Redirecting using < (fixed)
-   - Simple pipes (fixed)
+   - Redirecting using < (fixed?)
+   - Simple pipes (fixed?)
    
 3. Bugs
    - When parsing through multiple commands, so spaces can be used between semicolons (fixed)
