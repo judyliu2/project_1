@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 char ** parse_args(char * s1){
-	char ** ret = (char **) calloc (10, sizeof(char*));
+	char ** ret = (char **) calloc (800, sizeof(char*));
 	int i = 0;    
 
 	while (s1 && i < 9){
@@ -17,7 +17,7 @@ char ** parse_args(char * s1){
 }
 
 char ** parse_argC(char * s1){
-	char ** ret = (char **) calloc (10, sizeof(char*));
+	char ** ret = (char **) calloc (800, sizeof(char*));
 	int i = 0;
 
 	while (s1 && i < 9){
