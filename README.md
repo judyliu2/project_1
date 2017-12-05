@@ -23,8 +23,8 @@
 4. Files & Function Headers
 
 methods.c
+   - Handles all line-parsing functions
 ```C
-Handles all line-parsing functions
 /*
  * Function: parse_args
  * --------------------
@@ -73,11 +73,7 @@ Handles all line-parsing functions
 ```
    
 shell.h
-```
-contains headers
-```
+   - contains headers
 
 shell.c
-```
-Runs the shell and handles forking
-```
+   - Runs the shell and handles forking
